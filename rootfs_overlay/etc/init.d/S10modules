@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# Load modules
+#
+
+case "$1" in
+  start)
+	printf "Loading modules: "
+	/sbin/modprobe snd-soc-ak4458
+	/sbin/modprobe snd-soc-ak5558
+	/sbin/modprobe snd-soc-xlnx-i2s
+	/sbin/modprobe xlnx_formatter_pcm
+	/sbin/modprobe otbelec_sound_driver
+	;;
+  stop)
+	printf "Removing modules: "
+	/sbin/modprobe -r otbelec_sound_driver
+	/sbin/modprobe -r xlnx_formatter_pcm
+	/sbin/modprobe -r snd-soc-xlnx-i2s
+	/sbin/modprobe -r snd-soc-ak5558
+	/sbin/modprobe -r snd-soc-ak4458
+	;;
+  restart|reload)
+	"$0" stop
+	"$0" start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
