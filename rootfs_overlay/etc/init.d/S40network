@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# Start the network....
+#
+
+# Debian ifupdown needs the /run/network lock directory
+mkdir -p /run/network
+
+case "$1" in
+  start)
+	printf "Starting network: "
+	/sbin/ifup -a
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+	;;
+  stop)
+	printf "Stopping network: "
+	/sbin/ifdown -a
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+
+	# TODO: mdio/phy driver's GPIO reset does not work, so we do this:
+	echo '913' > /sys/class/gpio/export
+	echo '1' > /sys/class/gpio/gpio913/value
+	echo '0' > /sys/class/gpio/gpio913/value
+	echo '913' > /sys/class/gpio/unexport
+
+	;;
+  restart|reload)
+	"$0" stop
+	"$0" start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
+
