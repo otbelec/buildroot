@@ -6,6 +6,9 @@
 case "$1" in
   start)
 	printf "Loading modules...\n"
+	/sbin/modprobe matrix-keymap
+	/sbin/modprobe tca8418_keypad
+	/sbin/modprobe rotary_encoder
 	/sbin/modprobe snd
 	/sbin/modprobe snd-pcm
 	/sbin/modprobe snd-pcm-dmaengine
@@ -31,6 +34,9 @@ case "$1" in
 	/sbin/modprobe -r snd-pcm-dmaengine
 	/sbin/modprobe -r snd-pcm
 	/sbin/modprobe -r snd
+	/sbin/modprobe -r rotary_encoder
+	/sbin/modprobe -r tca8418_keypad
+	/sbin/modprobe -r matrix-keymap
 	;;
   restart|reload)
 	"$0" stop
