@@ -15,19 +15,9 @@ case "$1" in
 	/sbin/modprobe snd-hwdep
 	/sbin/modprobe snd-timer
 	/sbin/modprobe snd-soc-core
-	/sbin/modprobe snd-soc-ak4458
-	/sbin/modprobe snd-soc-ak5558
-	/sbin/modprobe snd-soc-xlnx-i2s
-	/sbin/modprobe xlnx_formatter_pcm
-	/sbin/modprobe otbelec_sound_driver
 	;;
   stop)
 	printf "Removing modules...\n"
-	/sbin/modprobe -r otbelec_sound_driver
-	/sbin/modprobe -r xlnx_formatter_pcm
-	/sbin/modprobe -r snd-soc-xlnx-i2s
-	/sbin/modprobe -r snd-soc-ak5558
-	/sbin/modprobe -r snd-soc-ak4458
 	/sbin/modprobe -r snd-soc-core
 	/sbin/modprobe -r snd-timer
 	/sbin/modprobe -r snd-hwdep
